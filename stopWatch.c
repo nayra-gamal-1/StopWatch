@@ -81,7 +81,7 @@ ISR(TIMER1_COMPA_vect){
 
 void INT0_Init(void){
 	DDRD &=~ (1<<PD2);  //INT0/PD2 AS INPUT
-	PORTD |=(1<<PD2); //INTERNAL PULL-UP REGISTOR
+	PORTD |=(1<<PD2); //INTERNAL PULL-UP RESISTOR
 	MCUCR |= (1<<ISC01); //TRIGGER AS FALLING EDGE INTERRUPT
 	MCUCR &=~(1<<ISC00);
 	GICR |= (1<<INT0);   //ENABLE EXTERNAL INTERRUPT
@@ -108,7 +108,7 @@ ISR(INT1_vect){
 }
 void INT2_Init(void){
 	DDRB &=~ (1<<PB2);  //INT2/PB2 AS INPUT
-	PORTB |=(1<<PB2); //INTERNAL PULL-UP REGISTOR
+	PORTB |=(1<<PB2); //INTERNAL PULL-UP RESISTOR
 	MCUCSR &=~ (1<<ISC2); //TRIGGER AS FALLING EDGE INTERRUPT
 	GICR |= (1<<INT2);   //ENABLE EXTERNAL INTERRUPT
 	SREG |= (1<<7);  //SET I-BIT
@@ -124,11 +124,11 @@ int main(void)
 	DDRC |= 0x0F; 			// Configure the first four pins in PORTC as output pins.
 	PORTC &= 0xF0; 		    // 7-segment display zero at the beginning.
 	DDRA |= 0xC0;           //Configure the 6-pins in PORTA as output pins
-
+	
+        Timer1_Init();
 	INT0_Init();
 	INT1_Init();
 	INT2_Init();
-	Timer1_Init();
 	display();
 	while(1){
 		display();
